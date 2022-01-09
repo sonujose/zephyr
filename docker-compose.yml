@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+  kube-spectrum:
+    build: 
+      dockerfile: Dockerfile
+      context: .
+    environment:
+      - APP_PORT=7500
+    ports:
+      - "7500:7500"
