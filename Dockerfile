@@ -10,7 +10,7 @@ COPY . .
 
 # RUN go get
 
-RUN CGO_ENABLED=0 GOOS=linux go build cmd/main.go -a -installsuffix cgo -o kube-spectrum .
+RUN CGO_ENABLED=0 GOOS=linux go build -mod=vendor -a -installsuffix cgo -o kube-spectrum .
 
 FROM alpine:3.12 
 RUN apk --no-cache add ca-certificates

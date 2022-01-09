@@ -7,5 +7,6 @@ services:
       context: .
     environment:
       - APP_PORT=7500
+      - GIN_MODE=release
     ports:
       - "7500:7500"

@@ -122,7 +122,12 @@ func GetContextAwareLogger(c *gin.Context) *logrus.Entry {
 }
 
 func Get() *logrus.Entry {
-	return Logger
+	if Logger != nil {
+		return Logger
+	}
+
+	logger := Initialize().WithFields(logrus.Fields{})
+	return logger
 }
 
 // Get the traceID associated with current request

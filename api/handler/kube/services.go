@@ -4,8 +4,10 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/sirupsen/logrus"
 	"github.com/sonujose/kube-spectrum/api/dto"
 	"github.com/sonujose/kube-spectrum/internal/logger"
+	kresource "github.com/sonujose/kube-spectrum/pkg/resource"
 )
 
 // GetServices godoc
@@ -24,12 +26,27 @@ func (h *apihandler) GetServices(c *gin.Context) {
 
 	namespace := c.Param("namespace")
 
-	//kclient := resources.NewClient()
+	res := kresource.New(KubeClient)
+
+	services, err := res.ListServices(&namespace)
+
+	if err != nil {
+
+		logmanager.WithFields(logrus.Fields{"error": err}).Errorf("Error fetching services from cluster for namespace %s", namespace)
+
+		c.JSON(http.StatusInternalServerError, dto.ErrorResponse{
+			Status:    "Operation failed",
+			IsSuccess: false,
+			Error:     "Internal Server Error, Unable to fetch services from cluster",
+		})
+
+		return
+	}
 
 	logmanager.Infof("Successfully fetched Services for the namespace %s", namespace)
 
 	c.JSON(http.StatusOK, &dto.ServiceResultResponse{
 		IsSuccess: true,
-		Data:      nil,
+		Data:      *services,
 	})
 }
