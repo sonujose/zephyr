@@ -18,7 +18,7 @@ import (
 // @in header
 // @name Authorization
 
-// @BasePath /devops/workload-mgmt/v1.0.0
+// @BasePath /api/v1
 func main() {
 
 	log := logger.Initialize()

@@ -25,11 +25,14 @@ var (
 
 func InitClient() {
 	log := logger.Get()
-	KubeClient, err := kclient.NewKubeClient()
+	client, err := kclient.NewKubeClient()
 
 	if err != nil {
 		log.Errorf("Error initialing kubernetes client")
+		return
 	}
 
-	log.Infof("Successfully initialized kubernetes client %v", KubeClient)
+	KubeClient = client
+
+	log.Infof("Successfully initialized kubernetes client.")
 }

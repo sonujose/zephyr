@@ -6,9 +6,9 @@
         "contact": {},
         "version": "2.0"
     },
-    "basePath": "/devops/workload-mgmt/v1.0.0",
+    "basePath": "/api/v1",
     "paths": {
-        "/api/services/{namespace}": {
+        "/services/{namespace}": {
             "get": {
                 "consumes": [
                     "*/*"

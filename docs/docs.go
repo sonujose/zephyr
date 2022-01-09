@@ -23,7 +23,7 @@ var doc = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/api/services/{namespace}": {
+        "/services/{namespace}": {
             "get": {
                 "consumes": [
                     "*/*"
@@ -114,7 +114,7 @@ type swaggerInfo struct {
 var SwaggerInfo = swaggerInfo{
 	Version:     "2.0",
 	Host:        "",
-	BasePath:    "/devops/workload-mgmt/v1.0.0",
+	BasePath:    "/api/v1",
 	Schemes:     []string{},
 	Title:       "Kube-spectrum kubernetes Service",
 	Description: "Kube-spectrum kubernetes Dashboard Service",

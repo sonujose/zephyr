@@ -18,7 +18,7 @@ import (
 // @Produce json
 // @Success 200 {object} []dto.ServiceResultResponse
 // @Failure 500 {object} []dto.ErrorResponse
-// @Router /api/services/{namespace} [get]
+// @Router /services/{namespace} [get]
 func (h *apihandler) GetServices(c *gin.Context) {
 
 	// Get the context aware logger set by the Logging middleware
