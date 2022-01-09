@@ -4,9 +4,9 @@ import (
 	"github.com/gin-gonic/contrib/cors"
 	"github.com/gin-gonic/gin"
 	apis "github.com/sonujose/kube-spectrum/api"
-	"github.com/sonujose/kube-spectrum/api/handler"
-	"github.com/sonujose/kube-spectrum/pkg/logger"
-	"github.com/sonujose/kube-spectrum/pkg/utility"
+	"github.com/sonujose/kube-spectrum/api/handler/kube"
+	"github.com/sonujose/kube-spectrum/internal/logger"
+	"github.com/sonujose/kube-spectrum/internal/utility"
 )
 
 // @title Kube-spectrum kubernetes Service
@@ -41,7 +41,7 @@ func main() {
 	// Calling routes method to register all api routes
 	apis.RegisterAPIRoutes(router, log)
 
-	handler.InitKubeClient()
+	kube.InitClient()
 
 	log.Infof("Server listening on port %s", utility.GetEnv("APP_PORT", "7500"))
 

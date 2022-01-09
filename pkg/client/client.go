@@ -18,7 +18,7 @@ import (
 // Create kubernetes client while running locally in machine using kubeconfig for incluster use service account
 // Use vendor specific sdk for auth if you are not using cluster certificates in your kubeconfig
 // Here we are using k8s.io/client-go/plugin/pkg/client/auth/azure since the connection is only from aks
-func NewClient() (client *kubernetes.Clientset, err error) {
+func NewKubeClient() (client *kubernetes.Clientset, err error) {
 
 	var kubeconfig *string
 

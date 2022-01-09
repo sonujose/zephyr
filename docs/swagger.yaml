@@ -1,0 +1,57 @@
+basePath: /devops/workload-mgmt/v1.0.0
+definitions:
+  dto.ErrorResponse:
+    properties:
+      error:
+        type: string
+      isSuccess:
+        type: boolean
+      status:
+        type: string
+    type: object
+  dto.ServiceResultResponse:
+    properties:
+      data: {}
+      isSuccess:
+        type: boolean
+    type: object
+info:
+  contact: {}
+  description: Kube-spectrum kubernetes Dashboard Service
+  title: Kube-spectrum kubernetes Service
+  version: "2.0"
+paths:
+  /api/services/{namespace}:
+    get:
+      consumes:
+      - '*/*'
+      parameters:
+      - description: Namespace
+        in: path
+        name: namespace
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.ServiceResultResponse'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            items:
+              $ref: '#/definitions/dto.ErrorResponse'
+            type: array
+      summary: Get services for specified namespace
+      tags:
+      - Services
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

@@ -9,7 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 	"github.com/sirupsen/logrus"
-	"github.com/sonujose/kube-spectrum/pkg/utility"
+	"github.com/sonujose/kube-spectrum/internal/utility"
 )
 
 // CorrelationHeader defines a default Correlation ID HTTP header.
@@ -121,7 +121,7 @@ func GetContextAwareLogger(c *gin.Context) *logrus.Entry {
 	return Logger
 }
 
-func GetLogger() *logrus.Entry {
+func Get() *logrus.Entry {
 	return Logger
 }
 
