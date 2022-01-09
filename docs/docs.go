@@ -25,6 +25,11 @@ var doc = `{
     "paths": {
         "/services/{namespace}": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "consumes": [
                     "*/*"
                 ],
@@ -93,7 +98,7 @@ var doc = `{
         }
     },
     "securityDefinitions": {
-        "ApiKeyAuth": {
+        "BearerAuth": {
             "type": "apiKey",
             "name": "Authorization",
             "in": "header"

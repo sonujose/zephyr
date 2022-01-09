@@ -10,6 +10,11 @@
     "paths": {
         "/services/{namespace}": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "consumes": [
                     "*/*"
                 ],
@@ -78,7 +83,7 @@
         }
     },
     "securityDefinitions": {
-        "ApiKeyAuth": {
+        "BearerAuth": {
             "type": "apiKey",
             "name": "Authorization",
             "in": "header"

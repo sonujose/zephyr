@@ -14,7 +14,7 @@ import (
 // @description Kube-spectrum kubernetes Dashboard Service
 // @team Kube-spectrum
 
-// @securityDefinitions.apikey ApiKeyAuth
+// @securityDefinitions.apikey BearerAuth
 // @in header
 // @name Authorization
 

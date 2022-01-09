@@ -46,11 +46,13 @@ paths:
             items:
               $ref: '#/definitions/dto.ErrorResponse'
             type: array
+      security:
+      - BearerAuth: []
       summary: Get services for specified namespace
       tags:
       - Services
 securityDefinitions:
-  ApiKeyAuth:
+  BearerAuth:
     in: header
     name: Authorization
     type: apiKey

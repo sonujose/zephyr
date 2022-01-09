@@ -16,6 +16,7 @@ import (
 // @Param namespace  path	string	true	"Namespace"
 // @Accept */*
 // @Produce json
+// @Security BearerAuth
 // @Success 200 {object} []dto.ServiceResultResponse
 // @Failure 500 {object} []dto.ErrorResponse
 // @Router /services/{namespace} [get]
