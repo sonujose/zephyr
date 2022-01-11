@@ -13,6 +13,7 @@ type ServiceListChannel struct {
 	Error chan error
 }
 
+// Routine to
 func GetServiceListChannel(client client.Interface, namespace *string) ServiceListChannel {
 
 	channelSize := 1
