@@ -26,7 +26,7 @@ paths:
       consumes:
       - '*/*'
       parameters:
-      - description: Namespace
+      - description: namespace
         in: path
         name: namespace
         required: true

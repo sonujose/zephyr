@@ -8,5 +8,7 @@ services:
     environment:
       - APP_PORT=7500
       - GIN_MODE=release
+      - SERVICE_LABEL_SELECTOR_KEY=HealthChecks
+      - SERVICE_LABEL_SELECTOR_VALUE=enabled
     ports:
       - "7500:7500"

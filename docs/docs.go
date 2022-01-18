@@ -43,7 +43,7 @@ var doc = `{
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Namespace",
+                        "description": "namespace",
                         "name": "namespace",
                         "in": "path",
                         "required": true

@@ -1,12 +1,11 @@
 package resource
 
 import (
-	v1 "k8s.io/api/core/v1"
 	client "k8s.io/client-go/kubernetes"
 )
 
 type Resource interface {
-	ListServices(namespace *string) (*v1.ServiceList, error)
+	ListServices(namespace *string) (*[]ServiceDto, error)
 }
 
 type resource struct {

@@ -13,7 +13,7 @@ import (
 // GetServices godoc
 // @Summary Get services for specified namespace
 // @Tags Services
-// @Param namespace  path	string	true	"Namespace"
+// @Param namespace  path	string	true "namespace"
 // @Accept */*
 // @Produce json
 // @Security BearerAuth
