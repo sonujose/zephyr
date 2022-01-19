@@ -2,8 +2,6 @@ package resource
 
 import (
 	"time"
-
-	v1 "k8s.io/api/core/v1"
 )
 
 type ServiceDto struct {
@@ -30,11 +28,13 @@ type ServiceDto struct {
 	ClusterIP string `json:"clusterIP"`
 
 	// Type determines how the service will be exposed.  Valid options: ClusterIP, NodePort, LoadBalancer, ExternalName
-	Type v1.ServiceType `json:"type"`
+	Type string `json:"type"`
 
 	// Ports mapped to the service
 	Ports []Ports `json:"ports"`
 }
+
+type ServiceType string
 
 type Ports struct {
 	Name       string `json:"name"`

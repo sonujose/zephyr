@@ -16,6 +16,31 @@ type ServiceListChannel struct {
 }
 
 /**
+  GetServiceListChannel
+  Routine return servicelist channel to fetch services based on configured labels
+**/
+func GetServiceListChannel(client client.Interface, namespace *string) ServiceListChannel {
+
+	channelSize := 1
+
+	channel := ServiceListChannel{
+		List:  make(chan *v1.ServiceList, 1),
+		Error: make(chan error, 1),
+	}
+
+	serviceListOptions := GetLabelSelectorListOptionsForService()
+	go func() {
+		list, err := client.CoreV1().Services(*namespace).List(context.TODO(), serviceListOptions)
+		for i := 0; i < channelSize; i++ {
+			channel.List <- list
+			channel.Error <- err
+		}
+	}()
+
+	return channel
+}
+
+/**
   GetLabelSelectorListOptionsForService
   Fetch the global label seletor key value pair form the enviornment
   Supply the LabelSelector to service List options
@@ -36,26 +61,4 @@ func GetLabelSelectorListOptionsForService() metav1.ListOptions {
 	}
 
 	return metav1.ListOptions{}
-}
-
-// Routine to get create channel to fetch services based on configured labels
-func GetServiceListChannel(client client.Interface, namespace *string) ServiceListChannel {
-
-	channelSize := 1
-
-	channel := ServiceListChannel{
-		List:  make(chan *v1.ServiceList, 1),
-		Error: make(chan error, 1),
-	}
-
-	serviceListOptions := GetLabelSelectorListOptionsForService()
-	go func() {
-		list, err := client.CoreV1().Services(*namespace).List(context.TODO(), serviceListOptions)
-		for i := 0; i < channelSize; i++ {
-			channel.List <- list
-			channel.Error <- err
-		}
-	}()
-
-	return channel
 }

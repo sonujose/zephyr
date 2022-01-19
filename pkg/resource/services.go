@@ -18,10 +18,13 @@ func toServiceDTO(servicesList *v1.ServiceList) *[]ServiceDto {
 
 	for _, k := range servicesList.Items {
 		serviceItem := &ServiceDto{
-			Name:      k.Name,
-			Namespace: k.Namespace,
-			Labels:    k.Labels,
-			Type:      k.Spec.Type,
+			Name:              k.Name,
+			Namespace:         k.Namespace,
+			Labels:            k.Labels,
+			Type:              string(k.Spec.Type),
+			Annotations:       k.Annotations,
+			CreationTimestamp: k.CreationTimestamp.Time,
+			Selector:          k.Spec.Selector,
 		}
 
 		svclist = append(svclist, *serviceItem)
