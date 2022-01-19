@@ -75,9 +75,81 @@
         "dto.ServiceResultResponse": {
             "type": "object",
             "properties": {
-                "data": {},
+                "data": {
+                    "$ref": "#/definitions/resource.ServiceDto"
+                },
                 "isSuccess": {
                     "type": "boolean"
+                }
+            }
+        },
+        "resource.Ports": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "port": {
+                    "type": "integer"
+                },
+                "protocol": {
+                    "type": "string"
+                },
+                "targetPort": {
+                    "type": "string"
+                }
+            }
+        },
+        "resource.ServiceDto": {
+            "type": "object",
+            "properties": {
+                "annotations": {
+                    "description": "List of all annotations associated with the service",
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "clusterIP": {
+                    "description": "ClusterIP is usually assigned by the master. Valid values are None, empty string (\"\"), or\na valid IP address. None can be specified for headless services when proxying is not required",
+                    "type": "string"
+                },
+                "creationTimestamp": {
+                    "description": "Time when the service was created",
+                    "type": "string"
+                },
+                "labels": {
+                    "description": "List of all labels associated with the service",
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "name": {
+                    "description": "Name of the service",
+                    "type": "string"
+                },
+                "namespace": {
+                    "description": "Namespace where service is created",
+                    "type": "string"
+                },
+                "ports": {
+                    "description": "Ports mapped to the service",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/resource.Ports"
+                    }
+                },
+                "selector": {
+                    "description": "Label selector of the service.",
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "type": {
+                    "description": "Type determines how the service will be exposed.  Valid options: ClusterIP, NodePort, LoadBalancer, ExternalName",
+                    "type": "string"
                 }
             }
         }

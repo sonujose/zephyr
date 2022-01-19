@@ -11,9 +11,62 @@ definitions:
     type: object
   dto.ServiceResultResponse:
     properties:
-      data: {}
+      data:
+        $ref: '#/definitions/resource.ServiceDto'
       isSuccess:
         type: boolean
+    type: object
+  resource.Ports:
+    properties:
+      name:
+        type: string
+      port:
+        type: integer
+      protocol:
+        type: string
+      targetPort:
+        type: string
+    type: object
+  resource.ServiceDto:
+    properties:
+      annotations:
+        additionalProperties:
+          type: string
+        description: List of all annotations associated with the service
+        type: object
+      clusterIP:
+        description: |-
+          ClusterIP is usually assigned by the master. Valid values are None, empty string (""), or
+          a valid IP address. None can be specified for headless services when proxying is not required
+        type: string
+      creationTimestamp:
+        description: Time when the service was created
+        type: string
+      labels:
+        additionalProperties:
+          type: string
+        description: List of all labels associated with the service
+        type: object
+      name:
+        description: Name of the service
+        type: string
+      namespace:
+        description: Namespace where service is created
+        type: string
+      ports:
+        description: Ports mapped to the service
+        items:
+          $ref: '#/definitions/resource.Ports'
+        type: array
+      selector:
+        additionalProperties:
+          type: string
+        description: Label selector of the service.
+        type: object
+      type:
+        description: 'Type determines how the service will be exposed.  Valid options:
+          ClusterIP, NodePort, LoadBalancer, ExternalName'
+        type: string
     type: object
 info:
   contact: {}

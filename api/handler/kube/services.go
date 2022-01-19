@@ -44,7 +44,7 @@ func (h *apihandler) GetServices(c *gin.Context) {
 		return
 	}
 
-	logmanager.Infof("Successfully fetched Services for the namespace %s", namespace)
+	logmanager.Debugf("Successfully fetched %d Services for the namespace %s", len(*services), namespace)
 
 	c.JSON(http.StatusOK, &dto.ServiceResultResponse{
 		IsSuccess: true,
