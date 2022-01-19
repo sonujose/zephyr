@@ -7,7 +7,7 @@ import (
 	"github.com/sirupsen/logrus"
 	"github.com/sonujose/kube-spectrum/api/dto"
 	"github.com/sonujose/kube-spectrum/internal/logger"
-	kresource "github.com/sonujose/kube-spectrum/pkg/resource"
+	"github.com/sonujose/kube-spectrum/pkg/resource/service"
 )
 
 // GetServices godoc
@@ -27,9 +27,9 @@ func (h *apihandler) GetServices(c *gin.Context) {
 
 	namespace := c.Param("namespace")
 
-	res := kresource.New(KubeClient)
+	resource := service.New(KubeClient)
 
-	services, err := res.ListServices(&namespace)
+	services, err := resource.ListServices(&namespace)
 
 	if err != nil {
 

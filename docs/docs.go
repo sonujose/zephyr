@@ -91,14 +91,34 @@ var doc = `{
             "type": "object",
             "properties": {
                 "data": {
-                    "$ref": "#/definitions/resource.ServiceDto"
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/service.ServiceDto"
+                    }
                 },
                 "isSuccess": {
                     "type": "boolean"
                 }
             }
         },
-        "resource.Ports": {
+        "service.PodInfo": {
+            "type": "object",
+            "properties": {
+                "isReady": {
+                    "type": "boolean"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "reason": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                }
+            }
+        },
+        "service.Ports": {
             "type": "object",
             "properties": {
                 "name": {
@@ -115,7 +135,7 @@ var doc = `{
                 }
             }
         },
-        "resource.ServiceDto": {
+        "service.ServiceDto": {
             "type": "object",
             "properties": {
                 "annotations": {
@@ -148,11 +168,18 @@ var doc = `{
                     "description": "Namespace where service is created",
                     "type": "string"
                 },
+                "podInfo": {
+                    "description": "Pod Instances",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/service.PodInfo"
+                    }
+                },
                 "ports": {
                     "description": "Ports mapped to the service",
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/resource.Ports"
+                        "$ref": "#/definitions/service.Ports"
                     }
                 },
                 "selector": {
@@ -161,6 +188,10 @@ var doc = `{
                     "additionalProperties": {
                         "type": "string"
                     }
+                },
+                "state": {
+                    "description": "Success statsus, check if any one pod is available to pass request",
+                    "type": "string"
                 },
                 "type": {
                     "description": "Type determines how the service will be exposed.  Valid options: ClusterIP, NodePort, LoadBalancer, ExternalName",

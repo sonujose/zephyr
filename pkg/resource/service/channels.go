@@ -1,4 +1,4 @@
-package resource
+package service
 
 import (
 	"context"

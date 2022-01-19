@@ -12,11 +12,24 @@ definitions:
   dto.ServiceResultResponse:
     properties:
       data:
-        $ref: '#/definitions/resource.ServiceDto'
+        items:
+          $ref: '#/definitions/service.ServiceDto'
+        type: array
       isSuccess:
         type: boolean
     type: object
-  resource.Ports:
+  service.PodInfo:
+    properties:
+      isReady:
+        type: boolean
+      name:
+        type: string
+      reason:
+        type: string
+      status:
+        type: string
+    type: object
+  service.Ports:
     properties:
       name:
         type: string
@@ -27,7 +40,7 @@ definitions:
       targetPort:
         type: string
     type: object
-  resource.ServiceDto:
+  service.ServiceDto:
     properties:
       annotations:
         additionalProperties:
@@ -53,16 +66,24 @@ definitions:
       namespace:
         description: Namespace where service is created
         type: string
+      podInfo:
+        description: Pod Instances
+        items:
+          $ref: '#/definitions/service.PodInfo'
+        type: array
       ports:
         description: Ports mapped to the service
         items:
-          $ref: '#/definitions/resource.Ports'
+          $ref: '#/definitions/service.Ports'
         type: array
       selector:
         additionalProperties:
           type: string
         description: Label selector of the service.
         type: object
+      state:
+        description: Success statsus, check if any one pod is available to pass request
+        type: string
       type:
         description: 'Type determines how the service will be exposed.  Valid options:
           ClusterIP, NodePort, LoadBalancer, ExternalName'

@@ -1,11 +1,12 @@
-package resource
+package pod
 
 import (
+	v1 "k8s.io/api/core/v1"
 	client "k8s.io/client-go/kubernetes"
 )
 
 type Resource interface {
-	ListServices(namespace *string) (*[]ServiceDto, error)
+	ListPods(namespace *string, selectors *map[string]string) (*v1.PodList, error)
 }
 
 type resource struct {

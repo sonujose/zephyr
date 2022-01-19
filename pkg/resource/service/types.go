@@ -1,4 +1,4 @@
-package resource
+package service
 
 import (
 	"time"
@@ -32,9 +32,22 @@ type ServiceDto struct {
 
 	// Ports mapped to the service
 	Ports []Ports `json:"ports"`
+
+	// Pod Instances
+	Pods []PodInfo `json:"podInfo"`
+
+	// Success statsus, check if any one pod is available to pass request
+	State string `json:"state"`
 }
 
 type ServiceType string
+
+type PodInfo struct {
+	Name    string `json:"name"`
+	Status  string `json:"status"`
+	Reason  string `json:"reason"`
+	IsReady bool   `json:"isReady"`
+}
 
 type Ports struct {
 	Name       string `json:"name"`
