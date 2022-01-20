@@ -27,6 +27,10 @@ type ServiceDto struct {
 	// a valid IP address. None can be specified for headless services when proxying is not required
 	ClusterIP string `json:"clusterIP"`
 
+	// ExternalIP is the Ip of the Loadbalancer attached with the service
+	// If service type is not Loadbalaner then IP will be none
+	ExternalIP string `json:"externalIP"`
+
 	// Type determines how the service will be exposed.  Valid options: ClusterIP, NodePort, LoadBalancer, ExternalName
 	Type string `json:"type"`
 

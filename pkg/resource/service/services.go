@@ -29,8 +29,11 @@ func (r *resource) ListServices(namespace *string) (*[]ServiceDto, error) {
 			CreationTimestamp: k.CreationTimestamp.Time,
 			Selector:          k.Spec.Selector,
 			ClusterIP:         k.Spec.ClusterIP,
-			State:             "Failed", // Setting default state to be failed, Success state is set only if one of pod is in ready state
+			ExternalIP:        k.Spec.ExternalIPs[0],
 		}
+
+		// Setting default state to be failed, Success state is set only if one of pod is in ready state
+		serviceItem.State = "Failed"
 
 		// Fetching all pods underlying the container
 		pods, err := resource.ListPods(namespace, &k.Spec.Selector)
