@@ -2,12 +2,21 @@ basePath: /api/v1
 definitions:
   dto.ErrorResponse:
     properties:
-      error:
+      description:
         type: string
       isSuccess:
         type: boolean
-      status:
+      message:
         type: string
+    type: object
+  dto.NamespaceListResponse:
+    properties:
+      data:
+        items:
+          type: string
+        type: array
+      isSuccess:
+        type: boolean
     type: object
   dto.ServiceResultResponse:
     properties:
@@ -55,6 +64,11 @@ definitions:
       creationTimestamp:
         description: Time when the service was created
         type: string
+      externalIP:
+        description: |-
+          ExternalIP is the Ip of the Loadbalancer attached with the service
+          If service type is not Loadbalaner then IP will be none
+        type: string
       labels:
         additionalProperties:
           type: string
@@ -95,6 +109,30 @@ info:
   title: Kube-spectrum kubernetes Service
   version: "2.0"
 paths:
+  /namespaces:
+    get:
+      consumes:
+      - '*/*'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.NamespaceListResponse'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            items:
+              $ref: '#/definitions/dto.ErrorResponse'
+            type: array
+      security:
+      - BearerAuth: []
+      summary: Get list of namespace
+      tags:
+      - Namespace
   /services/{namespace}:
     get:
       consumes:

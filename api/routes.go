@@ -29,6 +29,7 @@ func RegisterAPIRoutes(router *gin.Engine, logger *logrus.Logger) {
 	{
 		// Services
 		apiV1.GET("/services/:namespace", kubeHandler.GetServices)
+		apiV1.GET("/namespaces", kubeHandler.GetNamespaces)
 	}
 
 	// Registering swagger endpoints

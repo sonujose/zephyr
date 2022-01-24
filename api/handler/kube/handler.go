@@ -9,6 +9,7 @@ import (
 
 type APIHandler interface {
 	GetServices(c *gin.Context)
+	GetNamespaces(c *gin.Context)
 }
 
 type apihandler struct {

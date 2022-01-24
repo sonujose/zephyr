@@ -23,6 +23,45 @@ var doc = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/namespaces": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "consumes": [
+                    "*/*"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Namespace"
+                ],
+                "summary": "Get list of namespace",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/dto.NamespaceListResponse"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/dto.ErrorResponse"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/services/{namespace}": {
             "get": {
                 "security": [
@@ -76,14 +115,28 @@ var doc = `{
         "dto.ErrorResponse": {
             "type": "object",
             "properties": {
-                "error": {
+                "description": {
                     "type": "string"
                 },
                 "isSuccess": {
                     "type": "boolean"
                 },
-                "status": {
+                "message": {
                     "type": "string"
+                }
+            }
+        },
+        "dto.NamespaceListResponse": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "isSuccess": {
+                    "type": "boolean"
                 }
             }
         },
@@ -151,6 +204,10 @@ var doc = `{
                 },
                 "creationTimestamp": {
                     "description": "Time when the service was created",
+                    "type": "string"
+                },
+                "externalIP": {
+                    "description": "ExternalIP is the Ip of the Loadbalancer attached with the service\nIf service type is not Loadbalaner then IP will be none",
                     "type": "string"
                 },
                 "labels": {
