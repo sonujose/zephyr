@@ -5,7 +5,7 @@ import (
 )
 
 type Resource interface {
-	ListServices(namespace *string) (*[]ServiceDto, error)
+	ListServices(namespace *string, clusterScopr bool) (*[]ServiceDto, error)
 }
 
 type resource struct {

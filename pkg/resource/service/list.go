@@ -4,8 +4,8 @@ import (
 	"github.com/sonujose/kube-spectrum/pkg/resource/pod"
 )
 
-func (r *resource) ListServices(namespace *string) (*[]ServiceDto, error) {
-	servicechannel := GetServiceListChannel(r.kclient, namespace)
+func (r *resource) ListServices(namespace *string, clusterScope bool) (*[]ServiceDto, error) {
+	servicechannel := GetServiceListChannel(r.kclient, namespace, clusterScope)
 
 	services := <-servicechannel.List
 	err := <-servicechannel.Error

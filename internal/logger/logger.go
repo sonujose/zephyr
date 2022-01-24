@@ -52,6 +52,8 @@ func SettraceID(logger *logrus.Logger) gin.HandlerFunc {
 		}
 
 		//path := c.Request.URL.Path
+		// Adding correlation-id in response headers for every request
+		c.Writer.Header().Set("x-correlation-id", traceID)
 
 		logmanager := logger.WithFields(logrus.Fields{ContextKey: traceID})
 

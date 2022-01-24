@@ -13,7 +13,7 @@ import (
 // GetServices godoc
 // @Summary Get services for specified namespace
 // @Tags Services
-// @Param namespace  path	string	true "namespace"
+// @Param namespace  path	string	false "namespace"
 // @Accept */*
 // @Produce json
 // @Security BearerAuth
@@ -27,9 +27,14 @@ func (h *apihandler) GetServices(c *gin.Context) {
 
 	namespace := c.Param("namespace")
 
+	clusterScope := false
+	if len(namespace) == 0 || namespace == "all-ns" {
+		clusterScope = true
+	}
+
 	resource := service.New(KubeClient)
 
-	services, err := resource.ListServices(&namespace)
+	services, err := resource.ListServices(&namespace, clusterScope)
 
 	if err != nil {
 

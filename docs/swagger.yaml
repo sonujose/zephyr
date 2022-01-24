@@ -141,7 +141,6 @@ paths:
       - description: namespace
         in: path
         name: namespace
-        required: true
         type: string
       produces:
       - application/json

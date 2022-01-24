@@ -84,8 +84,7 @@ var doc = `{
                         "type": "string",
                         "description": "namespace",
                         "name": "namespace",
-                        "in": "path",
-                        "required": true
+                        "in": "path"
                     }
                 ],
                 "responses": {

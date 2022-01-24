@@ -19,13 +19,19 @@ type ServiceListChannel struct {
   GetServiceListChannel
   Routine return servicelist channel to fetch services based on configured labels
 **/
-func GetServiceListChannel(client client.Interface, namespace *string) ServiceListChannel {
+func GetServiceListChannel(client client.Interface, namespace *string, clusterScope bool) ServiceListChannel {
 
 	channelSize := 1
 
 	channel := ServiceListChannel{
 		List:  make(chan *v1.ServiceList, 1),
 		Error: make(chan error, 1),
+	}
+
+	// Setting namespace to empty if needed to list services from all namespaces
+	var allnamespaceQuery = ""
+	if clusterScope {
+		*namespace = allnamespaceQuery
 	}
 
 	serviceListOptions := GetLabelSelectorListOptionsForService()
