@@ -11,24 +11,37 @@ definitions:
     type: object
   dto.NamespaceListResponse:
     properties:
-      data:
+      isSuccess:
+        type: boolean
+      message:
         items:
           type: string
         type: array
-      isSuccess:
-        type: boolean
     type: object
   dto.ServiceResultResponse:
     properties:
-      data:
+      isSuccess:
+        type: boolean
+      message:
         items:
           $ref: '#/definitions/service.ServiceDto'
         type: array
-      isSuccess:
+    type: object
+  service.ContainerInfo:
+    properties:
+      image:
+        type: string
+      name:
+        type: string
+      status:
         type: boolean
     type: object
   service.PodInfo:
     properties:
+      containers:
+        items:
+          $ref: '#/definitions/service.ContainerInfo'
+        type: array
       isReady:
         type: boolean
       name:

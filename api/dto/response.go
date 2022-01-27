@@ -6,10 +6,10 @@ import (
 
 type ServiceResultResponse struct {
 	IsSuccess bool                 `json:"isSuccess"`
-	Data      []service.ServiceDto `json:"data"`
+	Data      []service.ServiceDto `json:"message"`
 }
 
 type NamespaceListResponse struct {
 	IsSuccess bool      `json:"isSuccess"`
-	Data      *[]string `json:"data"`
+	Data      *[]string `json:"message"`
 }

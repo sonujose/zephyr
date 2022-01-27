@@ -128,27 +128,41 @@ var doc = `{
         "dto.NamespaceListResponse": {
             "type": "object",
             "properties": {
-                "data": {
+                "isSuccess": {
+                    "type": "boolean"
+                },
+                "message": {
                     "type": "array",
                     "items": {
                         "type": "string"
                     }
-                },
-                "isSuccess": {
-                    "type": "boolean"
                 }
             }
         },
         "dto.ServiceResultResponse": {
             "type": "object",
             "properties": {
-                "data": {
+                "isSuccess": {
+                    "type": "boolean"
+                },
+                "message": {
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/service.ServiceDto"
                     }
+                }
+            }
+        },
+        "service.ContainerInfo": {
+            "type": "object",
+            "properties": {
+                "image": {
+                    "type": "string"
                 },
-                "isSuccess": {
+                "name": {
+                    "type": "string"
+                },
+                "status": {
                     "type": "boolean"
                 }
             }
@@ -156,6 +170,12 @@ var doc = `{
         "service.PodInfo": {
             "type": "object",
             "properties": {
+                "containers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/service.ContainerInfo"
+                    }
+                },
                 "isReady": {
                     "type": "boolean"
                 },

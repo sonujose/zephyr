@@ -56,11 +56,14 @@ func (r *resource) ListServices(namespace *string, clusterScope bool) (*[]Servic
 			// Optimistic - container is always ready..
 			// container should run!! thats the purpose, its strange if it is failing. Your views please..
 			containerstatus := true
-
+			podItem.Containers = make([]ContainerInfo, 0)
 			for _, cs := range pod.Status.ContainerStatuses {
 				if !cs.Ready {
 					containerstatus = false
 				}
+				container := &ContainerInfo{Name: cs.Name,
+					Image: cs.Image, Status: cs.Ready}
+				podItem.Containers = append(podItem.Containers, *container)
 			}
 
 			// If all the containers are in ready state, pod status is ready

@@ -46,13 +46,23 @@ type ServiceDto struct {
 
 type ServiceType string
 
+// Describe the basic information related to Pod
 type PodInfo struct {
-	Name    string `json:"name"`
-	Status  string `json:"status"`
-	Reason  string `json:"reason"`
-	IsReady bool   `json:"isReady"`
+	Name       string          `json:"name"`
+	Status     string          `json:"status"`
+	Reason     string          `json:"reason"`
+	IsReady    bool            `json:"isReady"`
+	Containers []ContainerInfo `json:"containers"`
 }
 
+// Describe the basic information related to Container
+type ContainerInfo struct {
+	Name   string `json:"name"`
+	Image  string `json:"image"`
+	Status bool   `json:"status"`
+}
+
+// PORT Info associated with the service
 type Ports struct {
 	Name       string `json:"name"`
 	Protocol   string `json:"protocol"`
