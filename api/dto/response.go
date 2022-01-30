@@ -13,3 +13,8 @@ type NamespaceListResponse struct {
 	IsSuccess bool      `json:"isSuccess"`
 	Data      *[]string `json:"message"`
 }
+
+type ServiceDetailsResponse struct {
+	IsSuccess bool        `json:"isSuccess"`
+	Message   interface{} `json:"message"`
+}
