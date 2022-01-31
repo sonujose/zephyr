@@ -7,7 +7,7 @@ import (
 
 type Resource interface {
 	ListPods(namespace *string, selectors *map[string]string) (*v1.PodList, error)
-	ListPodsDetailByService(namespace *string, service *string) (*v1.PodList, error)
+	ListPodsDetailByService(namespace *string, service *string) (*PodDto, error)
 }
 
 type resource struct {

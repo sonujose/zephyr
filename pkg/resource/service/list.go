@@ -5,6 +5,7 @@ import (
 )
 
 func (r *resource) ListServices(namespace *string, clusterScope bool) (*[]ServiceDto, error) {
+
 	servicechannel := GetServiceListChannel(r.kclient, namespace, clusterScope)
 
 	services := <-servicechannel.List
@@ -33,6 +34,12 @@ func (r *resource) ListServices(namespace *string, clusterScope bool) (*[]Servic
 
 		// Setting default state to be failed, Success state is set only if one of pod is in ready state
 		serviceItem.State = "Failed"
+
+		// In case - service doesn't have any selectors associated with it.
+		if len(k.Spec.Selector) == 0 {
+			svclist = append(svclist, *serviceItem)
+			continue
+		}
 
 		// Fetching all pods underlying the container
 		pods, err := resource.ListPods(namespace, &k.Spec.Selector)
