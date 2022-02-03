@@ -1,6 +1,7 @@
 package dto
 
 import (
+	"github.com/sonujose/kube-spectrum/pkg/resource/ingress"
 	"github.com/sonujose/kube-spectrum/pkg/resource/service"
 )
 
@@ -17,4 +18,9 @@ type NamespaceListResponse struct {
 type ServiceDetailsResponse struct {
 	IsSuccess bool        `json:"isSuccess"`
 	Message   interface{} `json:"message"`
+}
+
+type IngressDetailsResponse struct {
+	IsSuccess bool                  `json:"isSuccess"`
+	Message   *[]ingress.IngressDto `json:"message"`
 }

@@ -11,6 +11,7 @@ type APIHandler interface {
 	GetServices(c *gin.Context)
 	GetNamespaces(c *gin.Context)
 	GetServiceDetails(c *gin.Context)
+	GetIngress(c *gin.Context)
 }
 
 type apihandler struct {

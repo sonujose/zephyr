@@ -1,12 +1,11 @@
 package ingress
 
 import (
-	v1 "k8s.io/api/networking/v1"
 	client "k8s.io/client-go/kubernetes"
 )
 
 type Resource interface {
-	ListIngress(namespace *string, selectors *map[string]string, clusterScope bool) (*v1.IngressList, error)
+	ListIngress(namespace *string, clusterScope bool) (*[]IngressDto, error)
 }
 
 type resource struct {

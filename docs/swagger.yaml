@@ -9,6 +9,15 @@ definitions:
       message:
         type: string
     type: object
+  dto.IngressDetailsResponse:
+    properties:
+      isSuccess:
+        type: boolean
+      message:
+        items:
+          $ref: '#/definitions/ingress.IngressDto'
+        type: array
+    type: object
   dto.NamespaceListResponse:
     properties:
       isSuccess:
@@ -32,6 +41,104 @@ definitions:
         items:
           $ref: '#/definitions/service.ServiceDto'
         type: array
+    type: object
+  ingress.Backend:
+    properties:
+      service:
+        $ref: '#/definitions/ingress.Service'
+    type: object
+  ingress.HTTP:
+    properties:
+      paths:
+        items:
+          $ref: '#/definitions/ingress.Paths'
+        type: array
+    type: object
+  ingress.Ingress:
+    properties:
+      ip:
+        type: string
+    type: object
+  ingress.IngressDto:
+    properties:
+      metadata:
+        $ref: '#/definitions/ingress.Metadata'
+      spec:
+        $ref: '#/definitions/ingress.Spec'
+      status:
+        $ref: '#/definitions/ingress.Status'
+    type: object
+  ingress.LoadBalancer:
+    properties:
+      ingress:
+        items:
+          $ref: '#/definitions/ingress.Ingress'
+        type: array
+    type: object
+  ingress.Metadata:
+    properties:
+      annotations:
+        additionalProperties:
+          type: string
+        type: object
+      creationTimestamp:
+        type: string
+      generation:
+        type: integer
+      labels:
+        additionalProperties:
+          type: string
+        type: object
+      name:
+        type: string
+      namespace:
+        type: string
+      resourceVersion:
+        type: string
+      selfLink:
+        type: string
+      uid:
+        type: string
+    type: object
+  ingress.Paths:
+    properties:
+      backend:
+        $ref: '#/definitions/ingress.Backend'
+      path:
+        type: string
+      pathType:
+        type: string
+    type: object
+  ingress.Port:
+    properties:
+      number:
+        type: integer
+    type: object
+  ingress.Rules:
+    properties:
+      host:
+        type: string
+      http:
+        $ref: '#/definitions/ingress.HTTP'
+    type: object
+  ingress.Service:
+    properties:
+      name:
+        type: string
+      port:
+        $ref: '#/definitions/ingress.Port'
+    type: object
+  ingress.Spec:
+    properties:
+      rules:
+        items:
+          $ref: '#/definitions/ingress.Rules'
+        type: array
+    type: object
+  ingress.Status:
+    properties:
+      loadBalancer:
+        $ref: '#/definitions/ingress.LoadBalancer'
     type: object
   service.ContainerInfo:
     properties:
@@ -128,6 +235,35 @@ info:
   title: Kube-spectrum kubernetes Service
   version: "2.0"
 paths:
+  /ingress/{namespace}:
+    get:
+      consumes:
+      - '*/*'
+      parameters:
+      - description: namespace
+        in: path
+        name: namespace
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.IngressDetailsResponse'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            items:
+              $ref: '#/definitions/dto.ErrorResponse'
+            type: array
+      security:
+      - BearerAuth: []
+      summary: Get services for specified namespace
+      tags:
+      - Services
   /namespaces:
     get:
       consumes:

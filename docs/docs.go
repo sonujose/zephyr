@@ -23,6 +23,53 @@ var doc = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/ingress/{namespace}": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "consumes": [
+                    "*/*"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Services"
+                ],
+                "summary": "Get services for specified namespace",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "namespace",
+                        "name": "namespace",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/dto.IngressDetailsResponse"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/dto.ErrorResponse"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/namespaces": {
             "get": {
                 "security": [
@@ -180,6 +227,20 @@ var doc = `{
                 }
             }
         },
+        "dto.IngressDetailsResponse": {
+            "type": "object",
+            "properties": {
+                "isSuccess": {
+                    "type": "boolean"
+                },
+                "message": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ingress.IngressDto"
+                    }
+                }
+            }
+        },
         "dto.NamespaceListResponse": {
             "type": "object",
             "properties": {
@@ -214,6 +275,159 @@ var doc = `{
                     "items": {
                         "$ref": "#/definitions/service.ServiceDto"
                     }
+                }
+            }
+        },
+        "ingress.Backend": {
+            "type": "object",
+            "properties": {
+                "service": {
+                    "$ref": "#/definitions/ingress.Service"
+                }
+            }
+        },
+        "ingress.HTTP": {
+            "type": "object",
+            "properties": {
+                "paths": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ingress.Paths"
+                    }
+                }
+            }
+        },
+        "ingress.Ingress": {
+            "type": "object",
+            "properties": {
+                "ip": {
+                    "type": "string"
+                }
+            }
+        },
+        "ingress.IngressDto": {
+            "type": "object",
+            "properties": {
+                "metadata": {
+                    "$ref": "#/definitions/ingress.Metadata"
+                },
+                "spec": {
+                    "$ref": "#/definitions/ingress.Spec"
+                },
+                "status": {
+                    "$ref": "#/definitions/ingress.Status"
+                }
+            }
+        },
+        "ingress.LoadBalancer": {
+            "type": "object",
+            "properties": {
+                "ingress": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ingress.Ingress"
+                    }
+                }
+            }
+        },
+        "ingress.Metadata": {
+            "type": "object",
+            "properties": {
+                "annotations": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "creationTimestamp": {
+                    "type": "string"
+                },
+                "generation": {
+                    "type": "integer"
+                },
+                "labels": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "name": {
+                    "type": "string"
+                },
+                "namespace": {
+                    "type": "string"
+                },
+                "resourceVersion": {
+                    "type": "string"
+                },
+                "selfLink": {
+                    "type": "string"
+                },
+                "uid": {
+                    "type": "string"
+                }
+            }
+        },
+        "ingress.Paths": {
+            "type": "object",
+            "properties": {
+                "backend": {
+                    "$ref": "#/definitions/ingress.Backend"
+                },
+                "path": {
+                    "type": "string"
+                },
+                "pathType": {
+                    "type": "string"
+                }
+            }
+        },
+        "ingress.Port": {
+            "type": "object",
+            "properties": {
+                "number": {
+                    "type": "integer"
+                }
+            }
+        },
+        "ingress.Rules": {
+            "type": "object",
+            "properties": {
+                "host": {
+                    "type": "string"
+                },
+                "http": {
+                    "$ref": "#/definitions/ingress.HTTP"
+                }
+            }
+        },
+        "ingress.Service": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "port": {
+                    "$ref": "#/definitions/ingress.Port"
+                }
+            }
+        },
+        "ingress.Spec": {
+            "type": "object",
+            "properties": {
+                "rules": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ingress.Rules"
+                    }
+                }
+            }
+        },
+        "ingress.Status": {
+            "type": "object",
+            "properties": {
+                "loadBalancer": {
+                    "$ref": "#/definitions/ingress.LoadBalancer"
                 }
             }
         },
