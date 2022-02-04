@@ -1,14 +1,14 @@
 package service
 
 import (
-	"fmt"
+	"encoding/json"
 
 	"github.com/sonujose/kube-spectrum/pkg/resource/ingress"
 )
 
 type IngressServiceMap struct {
 	Metadata ingress.Metadata `json:"metadata"`
-	Routes   []ingress.Paths  `json:"spec"`
+	Routes   ingress.Paths    `json:"spec"`
 	Status   ingress.Status   `json:"status"`
 }
 
@@ -28,16 +28,24 @@ func (r *resource) ListServiceMappings(namespace *string, service *string) (*[]I
 		return nil, err
 	}
 
-	fmt.Println(ingresslist)
+	var ingressItem []ingress.IngressDto
+
+	b, _ := json.Marshal(ingresslist.Items)
+	err = json.Unmarshal(b, &ingressItem)
 
 	var rs []IngressServiceMap
 
-	// for i, ingressObj := range ingresslist.Items {
+	for _, j := range ingressItem {
+		for k := 0; k < len(j.Spec.Rules); k++ {
+			for _, path := range j.Spec.Rules[k].HTTP.Paths {
+				if path.Backend.Service.Name == *service {
+					svcmap := &IngressServiceMap{Status: j.Status, Metadata: j.Metadata, Routes: path}
+					rs = append(rs, *svcmap)
+				}
+			}
+		}
 
-	// 	if j.Spec.Rules[0].HTTP.Paths[0].Backend.Service.Name == *service {
-	// 		ingressObj.me
-	// 	}
-	// }
+	}
 
 	return &rs, err
 }

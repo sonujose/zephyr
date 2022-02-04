@@ -6,6 +6,7 @@ import (
 
 type Resource interface {
 	ListServices(namespace *string, clusterScopr bool) (*[]ServiceDto, error)
+	ListServiceMappings(namespace *string, service *string) (*[]IngressServiceMap, error)
 }
 
 type resource struct {
