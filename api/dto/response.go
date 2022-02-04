@@ -20,6 +20,11 @@ type ServiceDetailsResponse struct {
 	Message   interface{} `json:"message"`
 }
 
+type ServiceResponse struct {
+	IsSuccess bool        `json:"isSuccess"`
+	Message   interface{} `json:"message"`
+}
+
 type IngressDetailsResponse struct {
 	IsSuccess bool                  `json:"isSuccess"`
 	Message   *[]ingress.IngressDto `json:"message"`

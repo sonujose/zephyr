@@ -13,7 +13,7 @@ type IngressServiceMap struct {
 }
 
 /*
-	TODO:
+	ListServiceMappings
 	 - List all ingress in the namespace
 	 - Get details of the input service mostly selectors
 */

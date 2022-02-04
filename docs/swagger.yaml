@@ -33,6 +33,12 @@ definitions:
         type: boolean
       message: {}
     type: object
+  dto.ServiceResponse:
+    properties:
+      isSuccess:
+        type: boolean
+      message: {}
+    type: object
   dto.ServiceResultResponse:
     properties:
       isSuccess:
@@ -350,6 +356,41 @@ paths:
       security:
       - BearerAuth: []
       summary: Get full details of the service in the specified namespace
+      tags:
+      - Services
+  /services/mappings/ingress/{namespace}/{service}:
+    get:
+      consumes:
+      - '*/*'
+      parameters:
+      - description: service
+        in: path
+        name: service
+        required: true
+        type: string
+      - description: namespace
+        in: path
+        name: namespace
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.ServiceResponse'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            items:
+              $ref: '#/definitions/dto.ErrorResponse'
+            type: array
+      security:
+      - BearerAuth: []
+      summary: Get ingress mapping details for specified service
       tags:
       - Services
 securityDefinitions:

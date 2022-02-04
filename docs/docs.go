@@ -109,6 +109,61 @@ var doc = `{
                 }
             }
         },
+        "/services/mappings/ingress/{namespace}/{service}": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "consumes": [
+                    "*/*"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Services"
+                ],
+                "summary": "Get ingress mapping details for specified service",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "service",
+                        "name": "service",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "namespace",
+                        "name": "namespace",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/dto.ServiceResponse"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/dto.ErrorResponse"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/services/{namespace}": {
             "get": {
                 "security": [
@@ -256,6 +311,15 @@ var doc = `{
             }
         },
         "dto.ServiceDetailsResponse": {
+            "type": "object",
+            "properties": {
+                "isSuccess": {
+                    "type": "boolean"
+                },
+                "message": {}
+            }
+        },
+        "dto.ServiceResponse": {
             "type": "object",
             "properties": {
                 "isSuccess": {
