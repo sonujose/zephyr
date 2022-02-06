@@ -37,9 +37,9 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Services"
+                    "Ingress"
                 ],
-                "summary": "Get services for specified namespace",
+                "summary": "Get list of all ingress for the specified namespace",
                 "parameters": [
                     {
                         "type": "string",

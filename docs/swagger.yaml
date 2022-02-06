@@ -267,9 +267,9 @@ paths:
             type: array
       security:
       - BearerAuth: []
-      summary: Get services for specified namespace
+      summary: Get list of all ingress for the specified namespace
       tags:
-      - Services
+      - Ingress
   /namespaces:
     get:
       consumes:
