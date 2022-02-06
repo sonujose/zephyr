@@ -51,5 +51,5 @@ func (r *resource) ListPodsDetailByService(namespace *string, service *string) (
 		return nil, err
 	}
 
-	return &PodDto{Service: *service, Info: &podInfo, Namespace: *namespace}, err
+	return &PodDto{Service: *service, Info: &podInfo, Namespace: *namespace, Selectors: &ServiceSelectors}, err
 }

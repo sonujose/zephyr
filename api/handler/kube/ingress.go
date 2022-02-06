@@ -11,8 +11,8 @@ import (
 )
 
 // GetIngress godoc
-// @Summary Get services for specified namespace
-// @Tags Services
+// @Summary Get list of all ingress for the specified namespace
+// @Tags Ingress
 // @Param namespace  path	string	false "namespace"
 // @Accept */*
 // @Produce json

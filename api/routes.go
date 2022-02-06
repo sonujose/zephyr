@@ -28,10 +28,16 @@ func RegisterAPIRoutes(router *gin.Engine, logger *logrus.Logger) {
 	apiV1 := router.Group(basePath)
 	{
 		// Kube controller APIs
+		//
+		// Services
 		apiV1.GET("/services/:namespace", kubeHandler.GetServices)
 		apiV1.GET("/services/:namespace/:service", kubeHandler.GetServiceDetails)
-		apiV1.GET("/ingress/:namespace", kubeHandler.GetIngress)
 		apiV1.GET("/services/mappings/ingress/:namespace/:service", kubeHandler.GetServiceMappingWithIngress)
+
+		// Ingress
+		apiV1.GET("/ingress/:namespace", kubeHandler.GetIngress)
+
+		// Namespace
 		apiV1.GET("/namespaces", kubeHandler.GetNamespaces)
 	}
 

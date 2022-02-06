@@ -11,6 +11,9 @@ type PodDto struct {
 
 	// Spec and metadata related to PodInfo
 	Info *[]PodInfo `json:"info"`
+
+	// Service selectors
+	Selectors *map[string]string `json:"selectors"`
 }
 
 type PodInfo struct {
