@@ -7,9 +7,10 @@ import (
 )
 
 type IngressServiceMap struct {
-	Metadata ingress.Metadata `json:"metadata"`
-	Routes   ingress.Paths    `json:"spec"`
-	Status   ingress.Status   `json:"status"`
+	Metadata     ingress.Metadata `json:"metadata"`
+	Routes       ingress.Paths    `json:"spec"`
+	Status       ingress.Status   `json:"status"`
+	IngressClass string           `json:"ingressClass"`
 }
 
 /*
@@ -51,7 +52,8 @@ func (r *resource) ListServiceMappings(namespace *string, service *string) (*[]I
 				// Check if the backend service is defined as the specified one
 				// If found true, create a servicemap object with all metdata and current status
 				if path.Backend.Service.Name == *service {
-					svcmap := &IngressServiceMap{Status: j.Status, Metadata: j.Metadata, Routes: path}
+					ingressclass := j.Metadata.Annotations["kubernetes.io/ingress.class"]
+					svcmap := &IngressServiceMap{Status: j.Status, Metadata: j.Metadata, Routes: path, IngressClass: ingressclass}
 					ingressSvcMap = append(ingressSvcMap, *svcmap)
 				}
 			}
