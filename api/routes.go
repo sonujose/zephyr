@@ -31,8 +31,11 @@ func RegisterAPIRoutes(router *gin.Engine, logger *logrus.Logger) {
 		//
 		// Services
 		apiV1.GET("/services/:namespace", kubeHandler.GetServices)
-		apiV1.GET("/services/:namespace/:service", kubeHandler.GetServiceDetails)
+		apiV1.GET("/services/:namespace/:service", kubeHandler.GetServicePodDetails)
 		apiV1.GET("/services/mappings/ingress/:namespace/:service", kubeHandler.GetServiceMappingWithIngress)
+
+		// Pod
+		apiV1.GET("/pod/logs/:namespace/:pod/:container", kubeHandler.GetPodLogs)
 
 		// Ingress
 		apiV1.GET("/ingress/:namespace", kubeHandler.GetIngress)

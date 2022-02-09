@@ -10,9 +10,10 @@ import (
 type APIHandler interface {
 	GetServices(c *gin.Context)
 	GetNamespaces(c *gin.Context)
-	GetServiceDetails(c *gin.Context)
+	GetServicePodDetails(c *gin.Context)
 	GetIngress(c *gin.Context)
 	GetServiceMappingWithIngress(*gin.Context)
+	GetPodLogs(c *gin.Context)
 }
 
 type apihandler struct {

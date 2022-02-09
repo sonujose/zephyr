@@ -21,7 +21,7 @@ import (
 // @Success 200 {object} []dto.ServiceDetailsResponse
 // @Failure 500 {object} []dto.ErrorResponse
 // @Router /services/{namespace}/{service} [get]
-func (h *apihandler) GetServiceDetails(c *gin.Context) {
+func (h *apihandler) GetServicePodDetails(c *gin.Context) {
 
 	// Get the context aware logger set by the Logging middleware
 	logmanager := logger.GetContextAwareLogger(c)
@@ -51,6 +51,60 @@ func (h *apihandler) GetServiceDetails(c *gin.Context) {
 			Status:    "Operation failed",
 			IsSuccess: false,
 			Error:     "Internal Server Error, Unable to fetch service details from cluster",
+		})
+
+		return
+	}
+
+	c.JSON(http.StatusOK, &dto.ServiceDetailsResponse{
+		IsSuccess: true,
+		Message:   *service,
+	})
+}
+
+// GetPodLogs godoc
+// @Summary Get pod logs of pod and container in the specified namespace
+// @Tags Pods
+// @Param namespace  path	string	true "namespace"
+// @Param pod  path	string	true "pod"
+// @Param container  path	string	true "container"
+// @Accept */*
+// @Produce json
+// @Security BearerAuth
+// @Success 200 {object} dto.ServiceDetailsResponse
+// @Failure 500 {object} []dto.ErrorResponse
+// @Router /pod/logs/{namespace}/{pod}/{container} [get]
+func (h *apihandler) GetPodLogs(c *gin.Context) {
+
+	// Get the context aware logger set by the Logging middleware
+	logmanager := logger.GetContextAwareLogger(c)
+
+	namespace := c.Param("namespace")
+	podName := c.Param("pod")
+	containerName := c.Param("container")
+
+	if len(podName) == 0 || len(namespace) == 0 || len(containerName) == 0 {
+		c.JSON(http.StatusBadRequest, dto.ErrorResponse{
+			Status:    "Operation failed, Provide pod name, container and namespace",
+			IsSuccess: false,
+			Error:     "Bad request - Missing mandatory fields",
+		})
+
+		return
+	}
+
+	resource := pod.New(KubeClient)
+
+	service, err := resource.GetPodLogsBlob(&namespace, &podName, &containerName)
+
+	if err != nil {
+
+		logmanager.WithFields(logrus.Fields{"error": err}).Errorf("Error fetching pod logs of %s - %s from cluster for namespace %s", podName, containerName, namespace)
+
+		c.JSON(http.StatusInternalServerError, dto.ErrorResponse{
+			Status:    "Operation failed",
+			IsSuccess: false,
+			Error:     "Internal Server Error, Unable to fetch pod logs from cluster",
 		})
 
 		return

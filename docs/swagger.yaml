@@ -294,6 +294,46 @@ paths:
       summary: Get list of namespace
       tags:
       - Namespace
+  /pod/logs/{namespace}/{pod}/{container}:
+    get:
+      consumes:
+      - '*/*'
+      parameters:
+      - description: namespace
+        in: path
+        name: namespace
+        required: true
+        type: string
+      - description: pod
+        in: path
+        name: pod
+        required: true
+        type: string
+      - description: container
+        in: path
+        name: container
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.ServiceDetailsResponse'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            items:
+              $ref: '#/definitions/dto.ErrorResponse'
+            type: array
+      security:
+      - BearerAuth: []
+      summary: Get pod logs of pod and container in the specified namespace
+      tags:
+      - Pods
   /services/{namespace}:
     get:
       consumes:
