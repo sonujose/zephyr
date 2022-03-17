@@ -12,7 +12,7 @@ COPY . .
 
 RUN CGO_ENABLED=0 GOOS=linux go build -mod=vendor -a -installsuffix cgo -o kube-spectrum .
 
-FROM alpine:3.12 
+FROM alpine:3.13.7 
 RUN apk --no-cache add ca-certificates
 
 # Copy local kubeconfig to local container
